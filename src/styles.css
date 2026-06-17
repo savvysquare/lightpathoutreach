@@ -5,23 +5,23 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Lightpath Outreach — minimalist, ChildHope-inspired design system.
- * Palette: teal #1C7B9B (primary), soft yellow #FFD54A (accent),
- * soft cyan #6FCAD4, warm grey text on white. Generous whitespace,
- * rounded pills, subtle shadows, Nunito typography.
+ * Lightpath Outreach — MFI-inspired design system.
+ * Palette: deep navy #01284f (primary), vibrant orange #ff583e (CTA/accent),
+ * warm beige #f7f5e8 (bg), teal-grey #cfdedc, lime #c9fba2, charcoal #1a1a1a
+ * Typography: Inter + Poppins. Minimal, editorial, generous whitespace.
  */
 
 @theme inline {
-  --font-sans: "Nunito", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Poppins", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Merriweather", Georgia, serif;
+  --font-sans: "Inter", "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Poppins", ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 16px);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -38,11 +38,13 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-gold: var(--gold);
-  --color-gold-foreground: var(--gold-foreground);
-  --color-forest: var(--forest);
-  --color-forest-foreground: var(--forest-foreground);
+  --color-orange: var(--orange);
+  --color-orange-foreground: var(--orange-foreground);
+  --color-vert: var(--vert);
+  --color-vert-foreground: var(--vert-foreground);
+  --color-bleu-gris: var(--bleu-gris);
   --color-navy: var(--navy);
+  --color-charcoal: var(--charcoal);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -50,180 +52,270 @@
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
 
-  --shadow-soft: 0 8px 24px -12px oklch(0.50 0.05 230 / 0.18);
-  --shadow-glow: 0 14px 30px -16px oklch(0.55 0.10 230 / 0.25);
-
-  --gradient-hero: linear-gradient(135deg, oklch(0.99 0.005 230) 0%, oklch(0.96 0.02 220) 100%);
-  --gradient-warm: linear-gradient(180deg, oklch(1 0 0) 0%, oklch(0.985 0.008 220) 100%);
+  --shadow-soft: 0 4px 24px -8px rgba(1, 40, 79, 0.12);
+  --shadow-card: 0 8px 32px -12px rgba(1, 40, 79, 0.10);
+  --shadow-strong: 0 16px 48px -16px rgba(1, 40, 79, 0.18);
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
-  /* Surfaces */
-  --background: oklch(1 0 0);
-  --cream: oklch(0.985 0.008 220);          /* very light cool grey */
-  --foreground: oklch(0.40 0.02 240);       /* warm slate body text */
-  --navy: oklch(0.32 0.06 235);             /* deep teal headings */
+  /* Surfaces — MFI Exact Colors */
+  --background: #ffffff;
+  --cream: #f7f5e8;              /* MFI --color-beige */
+  --foreground: #1a1a1a;         /* MFI --color-charcoal */
+  --navy: #01284f;               /* MFI --color-bleu */
+  --charcoal: #1a1a1a;           /* MFI --color-charcoal */
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.40 0.02 240);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.40 0.02 240);
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
 
-  /* Brand */
-  --primary: oklch(0.55 0.09 230);          /* teal #1C7B9B */
-  --primary-foreground: oklch(1 0 0);
-  --forest: oklch(0.72 0.10 210);           /* soft cyan accent */
-  --forest-foreground: oklch(1 0 0);
-  --secondary: oklch(0.97 0.008 220);       /* near-white panel */
-  --secondary-foreground: oklch(0.32 0.06 235);
-  --gold: oklch(0.88 0.15 95);              /* soft yellow #FFD54A */
-  --gold-foreground: oklch(0.32 0.06 235);
-  --accent: oklch(0.96 0.015 220);
-  --accent-foreground: oklch(0.32 0.06 235);
+  /* Brand — MFI Orange as primary CTA */
+  --primary: #01284f;            /* Navy as primary brand */
+  --primary-foreground: #ffffff;
+  --orange: #ff583e;             /* MFI --color-orange — CTA */
+  --orange-foreground: #ffffff;
+  --vert: #c9fba2;               /* MFI --color-vert — lime highlight */
+  --vert-foreground: #01284f;
+  --bleu-gris: #cfdedc;          /* MFI --color-bleu-gris — teal grey */
+  --secondary: #f7f5e8;          /* warm beige panel */
+  --secondary-foreground: #01284f;
+  --accent: #cfdedc;
+  --accent-foreground: #01284f;
 
-  --muted: oklch(0.97 0.008 220);
-  --muted-foreground: oklch(0.55 0.02 240);
+  --muted: #f0ede0;
+  --muted-foreground: #705348;   /* MFI --color-brun */
 
-  --destructive: oklch(0.62 0.20 27);
-  --destructive-foreground: oklch(1 0 0);
+  --destructive: #ff583e;
+  --destructive-foreground: #ffffff;
 
-  --border: oklch(0.93 0.008 220);
-  --input: oklch(0.93 0.008 220);
-  --ring: oklch(0.55 0.09 230);
+  --border: rgba(1, 40, 79, 0.1);
+  --input: rgba(1, 40, 79, 0.1);
+  --ring: #ff583e;
 }
 
 @layer base {
   * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    color: var(--color-navy);
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     color: var(--color-navy);
     font-weight: 700;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 }
 
 @layer utilities {
-  .font-serif { font-family: var(--font-serif); }
+  /* Color helpers */
+  .font-sans { font-family: var(--font-sans); }
+  .font-display { font-family: var(--font-display); }
   .bg-cream { background-color: var(--color-cream); }
+  .bg-navy { background-color: var(--color-navy); }
+  .bg-orange { background-color: var(--color-orange); }
+  .bg-vert { background-color: var(--color-vert); }
+  .bg-bleu-gris { background-color: var(--color-bleu-gris); }
   .text-navy { color: var(--color-navy); }
-  .text-forest { color: var(--color-forest); }
-  .text-gold { color: var(--color-gold); }
-  .bg-forest { background-color: var(--color-forest); }
-  .bg-gold { background-color: var(--color-gold); }
-  .gradient-warm { background: var(--gradient-warm); }
+  .text-orange { color: var(--color-orange); }
+  .text-vert { color: var(--color-vert); }
+  .text-bleu-gris { color: var(--color-bleu-gris); }
   .shadow-soft { box-shadow: var(--shadow-soft); }
-  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-strong { box-shadow: var(--shadow-strong); }
 
-  .container-prose { max-width: 1200px; margin-inline: auto; padding-inline: 1.25rem; }
-
-  /* Pill Buttons matching ChildHope */
-  .btn-hero {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    background: var(--color-gold); color: var(--color-navy);
-    font-weight: 600; padding: 0.75rem 1.75rem; border-radius: 9999px;
-    box-shadow: 0 4px 12px oklch(0.88 0.15 95 / 0.3);
-    transition: all .25s ease;
+  /* Layout */
+  .container-prose {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
   }
-  .btn-hero:hover { transform: translateY(-2px); background: oklch(0.92 0.15 95); box-shadow: 0 6px 16px oklch(0.88 0.15 95 / 0.45); }
 
-  .btn-outline-light {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    background: oklch(1 0 0); color: var(--color-primary); font-weight: 600;
-    padding: 0.75rem 1.75rem; border-radius: 9999px;
+  /* MFI Orange CTA Button */
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--color-orange);
+    color: var(--color-orange-foreground);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 9999px;
+    border: none;
+    transition: all 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+    white-space: nowrap;
+  }
+  .btn-cta:hover {
+    background: #e04530;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 88, 62, 0.35);
+  }
+
+  /* MFI Navy Outline Button */
+  .btn-navy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--color-navy);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 9999px;
+    border: 1.5px solid var(--color-navy);
+    transition: all 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+    white-space: nowrap;
+  }
+  .btn-navy:hover {
+    background: var(--color-navy);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  /* Light outline for hero */
+  .btn-outline-white {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    transition: all 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+    white-space: nowrap;
+  }
+  .btn-outline-white:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.9);
+    transform: translateY(-2px);
+  }
+
+  /* MFI-style cards — large border radius, subtle shadow */
+  .card-mfi {
+    background: var(--color-card);
+    border-radius: 25px;
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
     border: 1px solid var(--color-border);
-    transition: all .25s ease;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .btn-outline-light:hover { background: var(--color-primary); color: var(--color-primary-foreground); transform: translateY(-2px); }
-
-  .btn-forest {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    background: var(--color-primary); color: var(--color-primary-foreground);
-    font-weight: 600; padding: 0.75rem 1.75rem; border-radius: 9999px;
-    transition: all .25s ease;
+  .card-mfi:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-strong);
   }
-  .btn-forest:hover { transform: translateY(-2px); background: oklch(0.50 0.09 230); }
 
-  /* Premium Card Styles */
-  .card-soft {
-    background: var(--color-card); border-radius: 24px; padding: 2rem;
-    box-shadow: var(--shadow-soft); border: 1px solid var(--color-border);
-    transition: all .3s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Glassmorphism nav pill */
+  .nav-glass {
+    background: rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 9999px;
   }
-  .card-soft:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -20px oklch(0.50 0.05 230 / 0.15); }
 
-  /* Highlight underlines / hovers inspired by ChildHope */
-  .highlight-hover {
+  /* MFI section eyebrow label */
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-orange);
+    margin-bottom: 1rem;
+  }
+
+  /* Animated underline link */
+  .link-hover {
     position: relative;
     display: inline-block;
     transition: color 0.3s ease;
   }
-  .highlight-hover::after {
+  .link-hover::after {
     content: '';
     position: absolute;
     width: 100%;
     transform: scaleX(0);
-    height: 2px;
+    height: 1.5px;
     bottom: -2px;
     left: 0;
-    background-color: var(--color-primary);
+    background-color: var(--color-orange);
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
   }
-  .highlight-hover:hover::after {
+  .link-hover:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
 
-  /* Slider Transitions */
+  /* Hero slide animation */
   .slide-fade-in {
-    animation: slideFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: slideFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   @keyframes slideFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(28px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   /* Circular Progress Ring */
   .progress-ring__circle {
-    transition: stroke-dashoffset 0.35s;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
   }
 
-  /* EON/Save-the-Children hero eyebrow accent stripe */
-  .hero-eyebrow-stripe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--color-gold) 0%, var(--color-primary) 60%, transparent 100%);
-    z-index: 30;
+  .fade-up {
+    animation: fadeUp 0.7s ease both;
   }
-
-  /* Dark-section glassmorphism overrides */
-  .bg-white\/8 { background-color: rgba(255,255,255,0.08); }
-  .bg-white\/12 { background-color: rgba(255,255,255,0.12); }
-  .hover\:bg-white\/12:hover { background-color: rgba(255,255,255,0.12); }
-
-  .fade-up { animation: fadeUp .7s ease both; }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .float-slow { animation: floatY 6s ease-in-out infinite; }
-  @keyframes floatY {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+
+  /* Stat counter blocks */
+  .stat-card {
+    background: var(--color-cream);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(1, 40, 79, 0.06);
+  }
+  .stat-card:hover {
+    background: var(--color-navy);
+    color: #fff;
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-strong);
+  }
+  .stat-card:hover .stat-num { color: var(--color-vert); }
+  .stat-card:hover .stat-label { color: rgba(255,255,255,0.7); }
+
+  /* Angled divider */
+  .angled-bottom {
+    clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  }
+  .angled-top {
+    clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 100%);
   }
 }
