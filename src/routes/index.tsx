@@ -484,7 +484,13 @@ function StatTile({ stat, run }: { stat: (typeof STATS)[number]; run: boolean })
 function Impact({ onStory, onDonate }: { onStory: (i: number) => void; onDonate: () => void }) {
   const [run,         setRun]         = useState(false);
   const [startIndex,  setStartIndex]  = useState(0);
-  const [visibleCount,setVisibleCount]= useState(3);
+  const [visibleCount,setVisibleCount]= useState(() => {
+    if (typeof window !== "undefined") {
+      if (window.innerWidth < 768) return 1;
+      if (window.innerWidth < 1024) return 2;
+    }
+    return 3;
+  });
 
   useEffect(() => {
     const el = document.getElementById("impact-stats");
@@ -499,9 +505,13 @@ function Impact({ onStory, onDonate }: { onStory: (i: number) => void; onDonate:
 
   useEffect(() => {
     const fn = () => {
-      if (window.innerWidth < 768) setVisibleCount(1);
-      else if (window.innerWidth < 1024) setVisibleCount(2);
-      else setVisibleCount(3);
+      let vc = 3;
+      if (window.innerWidth < 768) vc = 1;
+      else if (window.innerWidth < 1024) vc = 2;
+      setVisibleCount(vc);
+      
+      const newMax = Math.max(0, STORIES.length - vc);
+      setStartIndex((p) => Math.min(p, newMax));
     };
     fn(); window.addEventListener("resize", fn);
     return () => window.removeEventListener("resize", fn);
@@ -560,15 +570,17 @@ function Impact({ onStory, onDonate }: { onStory: (i: number) => void; onDonate:
             </div>
           </div>
 
-          <div className="overflow-hidden">
-            <div className="flex gap-4 transition-transform duration-500 ease-in-out"
+          <div className="overflow-hidden w-full">
+            <div className="flex gap-4 transition-transform duration-500 ease-in-out w-full"
               style={{
-                transform: `translateX(-${startIndex * (100 / visibleCount + (16 / (window?.innerWidth || 1200)) * 100)}%)`,
-                width: `${(STORIES.length / visibleCount) * 100}%`,
+                transform: `translateX(calc(-${startIndex} * (100% + 16px) / ${visibleCount}))`,
               }}>
               {STORIES.map((s, i) => (
                 <article key={s.name} className="flex-shrink-0 flex flex-col overflow-hidden rounded-xl bg-white"
-                  style={{ width: `calc(${100 / STORIES.length}% - 1rem)`, boxShadow: "0 4px 20px rgba(1,40,79,0.15)" }}>
+                  style={{
+                    width: `calc((100% - ${(visibleCount - 1) * 16}px) / ${visibleCount})`,
+                    boxShadow: "0 4px 20px rgba(1,40,79,0.15)",
+                  }}>
                   <div className="relative h-52 overflow-hidden">
                     <img src={s.img} alt={`${s.name}, age ${s.age}`} loading="lazy"
                       className="h-full w-full object-cover transition duration-700 hover:scale-105" />

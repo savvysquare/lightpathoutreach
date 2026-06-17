@@ -97,6 +97,12 @@
 @layer base {
   * { border-color: var(--color-border); box-sizing: border-box; }
 
+  html, body, #root {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -110,7 +116,7 @@
     font-family: var(--font-sans);
     font-weight: 400;
     line-height: 1.6;
-    overflow-x: hidden;
+    position: relative;
   }
 
   h1, h2, h3, h4, h5, h6 {
