@@ -92,6 +92,7 @@
   --border: oklch(0.93 0.008 220);
   --input: oklch(0.93 0.008 220);
   --ring: oklch(0.55 0.09 230);
+  --orange: oklch(0.74 0.17 55);            /* warm orange accent */
 }
 
 @layer base {
