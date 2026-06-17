@@ -22,8 +22,8 @@ import teaImg     from "@/assets/tea-sunday.jpg";
 import imgBlessing  from "@/assets/child-blessing.jpg";
 import imgChinedu   from "@/assets/child-chinedu.jpg";
 import imgAmina     from "@/assets/child-amina.jpg";
-import imgOluwaseun from "@/assets/child-oluwaseun.jpg";
-import imgFatima    from "@/assets/child-fatima.jpg";
+import imgOluwaseun from "@/assets/child-chinedu.jpg";
+import imgFatima    from "@/assets/child-blessing.jpg";
 
 export const Route = createFileRoute("/")({ component: LightpathHome });
 
@@ -302,15 +302,15 @@ function TrustBand() {
   return (
     <section className="divider bg-surface border-b" style={{ borderColor: "rgba(36,36,36,0.08)" }}>
       <div className="container-prose py-8">
-        <div className="flex flex-wrap items-center justify-between gap-8">
+        <div className="grid grid-cols-2 gap-y-6 gap-x-4 md:flex md:flex-wrap md:items-center md:justify-between md:gap-8">
           {items.map((item) => (
             <div key={item.label} className="flex flex-col">
               {/* #01284f on #f8f7f4 = 10.3:1 ✓ WCAG AAA */}
-              <span className="font-display text-2xl font-bold" style={{ color: "#01284f" }}>{item.num}</span>
-              <span className="label-mono mt-0.5">{item.label}</span>
+              <span className="font-display text-xl sm:text-2xl font-bold" style={{ color: "#01284f" }}>{item.num}</span>
+              <span className="label-mono mt-0.5 text-[9px] sm:text-[11px]">{item.label}</span>
             </div>
           ))}
-          <p className="max-w-xs text-sm leading-relaxed" style={{ color: "#5c5c5c" }}>
+          <p className="col-span-2 md:col-span-1 max-w-xs text-xs sm:text-sm leading-relaxed" style={{ color: "#5c5c5c" }}>
             Faith-rooted. Child-focused. Transforming lives across Nigerian communities.
           </p>
         </div>
