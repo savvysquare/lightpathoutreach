@@ -12,8 +12,9 @@
  */
 
 @theme inline {
-  --font-sans: "Nunito", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Nunito", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Merriweather", Georgia, ui-serif, serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --color-orange: var(--orange);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
