@@ -25,7 +25,7 @@ import {
   Sun,
   Quote,
   CheckCircle2,
-} from "lucide-react";
+} from "@/components/icons";
 
 import {
   Dialog,
