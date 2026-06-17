@@ -21,7 +21,8 @@ import {
   Facebook,
   Youtube,
   Twitter,
-  Calendar,
+  ChevronLeft,
+  ChevronRight,
   Sun,
   Quote,
   CheckCircle2,
@@ -50,25 +51,6 @@ import imgOluwaseun from "@/assets/child-oluwaseun.jpg";
 import imgFatima from "@/assets/child-fatima.jpg";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Lightpath Outreach — Hope, Character & Purpose for Every Nigerian Child" },
-      {
-        name: "description",
-        content:
-          "Lightpath Outreach is a Nigerian child-focused nonprofit nurturing hope, character and purpose through mentorship, education, feeding outreaches and community care.",
-      },
-      { property: "og:title", content: "Lightpath Outreach — Lighting the Path for Every Nigerian Child" },
-      {
-        property: "og:description",
-        content:
-          "Mentorship, feeding outreaches, hygiene support and fellowship for Nigerian children. Join us — donate, volunteer or partner.",
-      },
-      { property: "og:image", content: heroImg },
-      { name: "twitter:image", content: heroImg },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
   component: LightpathHome,
 });
 
@@ -205,30 +187,30 @@ const STORIES = [
   },
 ];
 
-const EVENTS = [
+const SLIDES = [
   {
-    title: "Back-to-School Feeding Outreach",
-    date: "Sat, 14 Sep 2026",
-    location: "Ile-Ife, Osun State",
-    desc: "Hot meals, school supplies and prayers as children return to a new term.",
+    image: heroImg,
+    badge: "Faith-inspired • Child-focused • Nigerian",
+    titleStart: "Every Nigerian",
+    titleMiddle: "child deserves",
+    titleEnd: "A Bright Future",
+    desc: "Lightpath Outreach inspires hope, nurtures character and improves lives through child development, mentorship, education, and compassionate community care across Nigeria.",
   },
   {
-    title: "Tea & Coffee Sunday Family Gathering",
-    date: "Sun, 22 Sep 2026",
-    location: "Ibadan, Oyo State",
-    desc: "An open-table morning of fellowship for families, children and mentors.",
+    image: aboutImg,
+    badge: "Nurturing Leaders • Transforming Lives",
+    titleStart: "Building Strong",
+    titleMiddle: "values, hope &",
+    titleEnd: "Good Character",
+    desc: "We walk alongside boys and girls with weekly mentorship circles, value-based programs, and leadership training to guide their path forward.",
   },
   {
-    title: "Girls' Leadership Weekend",
-    date: "Fri–Sat, 4–5 Oct 2026",
-    location: "Osogbo, Osun State",
-    desc: "Two days of leadership, self-worth and purpose training for teen girls.",
-  },
-  {
-    title: "Christmas Hope Outreach",
-    date: "Sat, 14 Dec 2026",
-    location: "Lagos & Abuja",
-    desc: "Gift bags, hot meals and joyful celebrations across partner communities.",
+    image: teaImg,
+    badge: "Community Support • Food & Fellowship",
+    titleStart: "Serving Hope &",
+    titleMiddle: "compassion to",
+    titleEnd: "Every Family",
+    desc: "Through monthly feeding outreaches, practical relief support, and our signature Tea & Coffee Sundays, we build spaces of warmth and belonging.",
   },
 ];
 
@@ -253,7 +235,7 @@ function LightpathHome() {
   const [programOpen, setProgramOpen] = useState<number | null>(null);
 
   return (
-    <div id="home" className="min-h-screen bg-background text-foreground">
+    <div id="home" className="min-h-screen bg-background text-foreground pt-[120px] lg:pt-[120px]">
       <Navbar
         open={menuOpen}
         setOpen={setMenuOpen}
@@ -261,22 +243,21 @@ function LightpathHome() {
       />
 
       <Hero onDonate={() => setDonateOpen(true)} />
+      <IntroBanner />
       <About />
       <Programmes onOpen={(i) => setProgramOpen(i)} />
-      <Impact onStory={(i) => setStoryOpen(i)} />
+      <Impact onStory={(i) => setStoryOpen(i)} onDonate={() => setDonateOpen(true)} />
       <GetInvolved
         onDonate={() => setDonateOpen(true)}
         onVolunteer={() => setVolunteerOpen(true)}
         onPartner={() => setPartnerOpen(true)}
       />
-      <Events />
-      <Newsletter />
-      <Footer />
+      <Footer onDonate={() => setDonateOpen(true)} />
 
       {/* Floating mobile donate */}
       <button
         onClick={() => setDonateOpen(true)}
-        className="btn-hero fixed bottom-5 right-5 z-40 md:hidden"
+        className="btn-hero fixed bottom-5 right-5 z-40 md:hidden shadow-glow"
         aria-label="Donate now"
       >
         <Heart className="h-4 w-4" /> Donate
@@ -316,7 +297,7 @@ function Logo({ light = false }: { light?: boolean }) {
         </span>
         <span
           className={`-mt-0.5 text-[11px] font-semibold uppercase tracking-[0.18em] ${
-            light ? "text-white/80" : "text-forest"
+            light ? "text-white/80" : "text-primary"
           }`}
         >
           Outreach
@@ -344,66 +325,86 @@ function Navbar({
   }, []);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/90 backdrop-blur shadow-soft"
-          : "bg-background/60 backdrop-blur-sm"
-      }`}
-    >
-      <div className="container-prose flex h-18 items-center justify-between py-3">
-        <Logo />
-        <nav className="hidden items-center gap-7 lg:flex">
-          {NAV.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              className="text-sm font-semibold text-navy/80 transition hover:text-primary"
-            >
-              {n.label}
+    <header className="fixed inset-x-0 top-0 z-50 flex flex-col transition-all duration-300">
+      {/* Top Row: Logo & Socials */}
+      <div className={`w-full bg-background transition-all duration-300 border-b border-border/40 ${scrolled ? 'h-0 opacity-0 overflow-hidden py-0 border-none' : 'h-16 py-3'}`}>
+        <div className="container-prose flex items-center justify-between h-full">
+          <Logo />
+          <div className="flex items-center gap-4 text-muted-foreground">
+            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-primary transition">
+              <Twitter className="h-4 w-4" />
             </a>
-          ))}
-        </nav>
-        <div className="flex items-center gap-2">
-          <button onClick={onDonate} className="btn-hero hidden md:inline-flex !py-2.5 !px-5 text-sm">
-            <Heart className="h-4 w-4" /> Donate Now
-          </button>
-          <button
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border lg:hidden"
-            aria-label="Toggle menu"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:text-primary transition">
+              <Facebook className="h-4 w-4" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-primary transition">
+              <Instagram className="h-4 w-4" />
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="hover:text-primary transition">
+              <Youtube className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Row: Navigation Menu */}
+      <div
+        className={`w-full transition-all duration-300 ${
+          scrolled
+            ? "bg-background/95 backdrop-blur shadow-soft border-b border-border"
+            : "bg-cream/90 backdrop-blur-sm border-b border-border/65"
+        }`}
+      >
+        <div className="container-prose flex h-14 items-center justify-between py-2">
+          {/* Logo visible on scrolled on desktop, always visible on mobile */}
+          <div className={`transition-all duration-300 ${scrolled ? 'opacity-100 scale-100 pointer-events-auto' : 'lg:opacity-0 lg:scale-95 lg:pointer-events-none'}`}>
+            <Logo />
+          </div>
+
+          <nav className="hidden items-center gap-7 lg:flex">
+            {NAV.map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                className="text-sm font-semibold text-navy/80 highlight-hover py-1 transition hover:text-primary"
+              >
+                {n.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <button onClick={onDonate} className="btn-hero !py-2 !px-4 text-xs shadow-soft">
+              <Heart className="h-3.5 w-3.5" /> Donate Now
+            </button>
+            <button
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border lg:hidden"
+              aria-label="Toggle menu"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       <div
         className={`lg:hidden overflow-hidden transition-[max-height] duration-300 ${
-          open ? "max-h-[480px]" : "max-h-0"
+          open ? "max-h-[480px] border-b border-border bg-background" : "max-h-0"
         }`}
       >
-        <div className="container-prose flex flex-col gap-1 border-t border-border bg-background py-4">
+        <div className="container-prose flex flex-col gap-1 py-4">
           {NAV.map((n) => (
             <a
               key={n.href}
               href={n.href}
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-3 text-base font-semibold text-navy hover:bg-cream"
+              className="rounded-xl px-3 py-2.5 text-base font-semibold text-navy hover:bg-cream transition"
             >
               {n.label}
             </a>
           ))}
-          <button
-            onClick={() => {
-              setOpen(false);
-              onDonate();
-            }}
-            className="btn-hero mt-2"
-          >
-            <Heart className="h-4 w-4" /> Donate Now
-          </button>
         </div>
       </div>
     </header>
@@ -412,46 +413,125 @@ function Navbar({
 
 /* -------------------------------- Hero ------------------------------- */
 
-function Hero({ onDonate: _onDonate }: { onDonate: () => void }) {
-  return (
-    <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden pt-24">
-      <img
-        src={heroImg}
-        alt="Joyful group of Nigerian children gathered at a church compound during a Lightpath Outreach fellowship"
-        width={1920}
-        height={1280}
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy/55 via-navy/35 to-navy/85" />
+function Hero({ onDonate }: { onDonate: () => void }) {
+  const [active, setActive] = useState(0);
 
-      <div className="container-prose w-full py-20 text-white">
-        <div className="max-w-3xl fade-up">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] backdrop-blur">
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % SLIDES.length);
+    }, 6500);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => setActive((prev) => (prev + 1) % SLIDES.length);
+  const prevSlide = () => setActive((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
+
+  return (
+    <section className="relative isolate flex min-h-[85svh] items-center overflow-hidden bg-navy">
+      {/* Background Images with transition */}
+      {SLIDES.map((slide, i) => (
+        <div
+          key={i}
+          className={`absolute inset-0 -z-20 transition-all duration-1000 ease-in-out ${
+            i === active ? "opacity-100 scale-100" : "opacity-0 scale-105 pointer-events-none"
+          }`}
+        >
+          <img
+            src={slide.image}
+            alt={slide.badge}
+            className="h-full w-full object-cover"
+          />
+          {/* ChildHope signature overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/55 to-transparent" />
+          <div className="absolute inset-0 bg-navy/15" />
+        </div>
+      ))}
+
+      {/* Main Content Area */}
+      <div className="container-prose w-full py-16 text-white relative z-10">
+        <div className="max-w-2xl text-left slide-fade-in" key={active}>
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] backdrop-blur-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-            Faith-inspired • Child-focused • Nigerian
+            {SLIDES[active].badge}
           </span>
-          <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
-            Every Nigerian Child Deserves a{" "}
-            <span className="text-gold">Bright Future</span>
+          
+          <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            {SLIDES[active].titleStart}
+            <br />
+            <span className="text-gold font-serif italic font-normal tracking-wide lowercase pr-3">
+              {SLIDES[active].titleMiddle}
+            </span>
+            <br />
+            {SLIDES[active].titleEnd}
           </h1>
-          <p className="mt-6 max-w-2xl text-base text-white/90 sm:text-lg">
-            Lightpath Outreach inspires hope, nurtures character and improves
-            lives through child development, mentorship, education, leadership
-            training, feeding outreaches, hygiene support and compassionate
-            community programmes across Nigeria.
+
+          <p className="mt-5 max-w-xl text-base text-white/85 leading-relaxed font-serif">
+            {SLIDES[active].desc}
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#involved" className="btn-hero">
+
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <button onClick={onDonate} className="btn-hero text-sm font-bold shadow-glow">
               <Heart className="h-4 w-4" /> Join Our Mission
-            </a>
-            <a href="#about" className="btn-outline-light">
-              Learn More About Us <ArrowRight className="h-4 w-4" />
+            </button>
+            <a href="#about" className="btn-outline-light text-sm font-bold text-navy hover:text-white bg-white hover:bg-primary border-none">
+              Learn More <ArrowRight className="h-4 w-4" />
             </a>
           </div>
-          <p className="mt-6 text-sm text-white/80">
-            Serving communities in Osun State and beyond • Partnering with
-            churches, schools &amp; families
-          </p>
+        </div>
+      </div>
+
+      {/* Slide Navigation controls */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/10 text-white/70 backdrop-blur-sm transition hover:bg-white hover:text-navy hover:border-white hover:scale-105 z-20"
+        aria-label="Previous slide"
+      >
+        <ArrowRight className="h-5 w-5 rotate-180" />
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/10 text-white/70 backdrop-blur-sm transition hover:bg-white hover:text-navy hover:border-white hover:scale-105 z-20"
+        aria-label="Next slide"
+      >
+        <ArrowRight className="h-5 w-5" />
+      </button>
+
+      {/* Slide Bullets */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2.5 z-20">
+        {SLIDES.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActive(idx)}
+            className={`h-2.5 rounded-full transition-all duration-300 ${
+              idx === active ? "w-8 bg-gold" : "w-2.5 bg-white/40 hover:bg-white/80"
+            }`}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------- Intro Banner -------------------------- */
+
+function IntroBanner() {
+  return (
+    <section className="bg-cream py-12 border-b border-border/50">
+      <div className="container-prose flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-navy leading-tight font-display">
+            Every child deserves{" "}
+            <span className="font-serif italic font-normal text-primary lowercase pr-2">
+              hope, character
+            </span>{" "}
+            and a bright future.
+          </h2>
+        </div>
+        <div className="flex-shrink-0">
+          <a href="#about" className="btn-forest text-sm font-bold shadow-soft">
+            Discover Our Values
+          </a>
         </div>
       </div>
     </section>
@@ -468,7 +548,7 @@ function About() {
     { icon: Sun, label: "Purpose" },
   ];
   return (
-    <section id="about" className="relative py-24 sm:py-28">
+    <section id="about" className="relative py-24 sm:py-28 bg-background">
       <div className="container-prose grid gap-12 lg:grid-cols-2 lg:items-center">
         <div className="relative">
           <img
@@ -477,12 +557,12 @@ function About() {
             width={1280}
             height={1024}
             loading="lazy"
-            className="relative z-10 w-full rounded-3xl object-cover shadow-soft"
+            className="relative z-10 w-full rounded-3xl object-cover shadow-soft border border-border/40"
           />
           <div className="absolute -bottom-6 -left-6 hidden h-40 w-40 rounded-3xl bg-gold/30 blur-2xl sm:block" />
           <div className="absolute -top-6 -right-6 hidden h-32 w-32 rounded-3xl bg-primary/25 blur-2xl sm:block" />
-          <div className="absolute -bottom-8 right-6 z-20 hidden rounded-2xl bg-background px-5 py-4 shadow-soft sm:flex sm:items-center sm:gap-3">
-            <div className="rounded-full bg-forest/10 p-2 text-forest">
+          <div className="absolute -bottom-8 right-6 z-20 hidden rounded-2xl bg-background px-5 py-4 shadow-soft sm:flex sm:items-center sm:gap-3 border border-border/40">
+            <div className="rounded-full bg-primary/10 p-2 text-primary">
               <HandHeart className="h-5 w-5" />
             </div>
             <div>
@@ -498,10 +578,13 @@ function About() {
           <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
             Our Mission
           </span>
-          <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl md:text-5xl">
-            Lighting Paths of <span className="text-primary">Hope</span>
+          <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl md:text-5xl leading-tight">
+            Lighting Paths of{" "}
+            <span className="font-serif italic font-normal text-primary lowercase pr-2">
+              hope
+            </span>
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-foreground/80">
+          <p className="mt-6 text-lg leading-relaxed text-foreground/80 font-serif italic border-l-4 border-primary pl-4">
             “To inspire hope, nurture character, and improve lives through child
             development, community care, and compassionate outreach programmes
             that empower individuals and strengthen society.”
@@ -519,10 +602,10 @@ function About() {
             {values.map((v) => (
               <div
                 key={v.label}
-                className="flex flex-col items-center rounded-2xl bg-cream px-3 py-5 text-center"
+                className="flex flex-col items-center rounded-2xl bg-cream px-3 py-5 text-center border border-border/30"
               >
                 <v.icon className="h-6 w-6 text-primary" />
-                <span className="mt-2 text-sm font-bold text-navy">
+                <span className="mt-2 text-sm font-bold text-navy font-display">
                   {v.label}
                 </span>
               </div>
@@ -552,7 +635,7 @@ function SectionHeader({
       <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
         {eyebrow}
       </span>
-      <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl md:text-5xl">
+      <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl md:text-5xl leading-tight">
         {title}
       </h2>
       {sub && (
@@ -566,13 +649,16 @@ function SectionHeader({
 
 function Programmes({ onOpen }: { onOpen: (i: number) => void }) {
   return (
-    <section id="programmes" className="gradient-warm py-24 sm:py-28">
+    <section id="programmes" className="bg-cream py-24 sm:py-28 border-y border-border/40">
       <div className="container-prose">
         <SectionHeader
           eyebrow="Our Programmes"
           title={
             <>
-              How We <span className="text-primary">Light the Path</span>
+              How We{" "}
+              <span className="font-serif italic font-normal text-primary lowercase pr-2">
+                light the path
+              </span>
             </>
           }
           sub="Eight key objectives guiding everything we do for Nigerian children and the communities that surround them."
@@ -583,23 +669,25 @@ function Programmes({ onOpen }: { onOpen: (i: number) => void }) {
             <button
               key={p.title}
               onClick={() => onOpen(i)}
-              className="card-soft group text-left"
+              className="card-soft group text-left bg-background flex flex-col justify-between"
             >
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
-                <p.icon className="h-6 w-6" />
+              <div>
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
+                  <p.icon className="h-6 w-6" />
+                </div>
+                <h3 className="mt-5 text-lg font-bold text-navy font-display">{p.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {p.short}
+                </p>
               </div>
-              <h3 className="mt-5 text-lg font-bold text-navy">{p.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {p.short}
-              </p>
-              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                Learn more <ArrowRight className="h-4 w-4" />
+              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary highlight-hover">
+                Learn more <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </span>
             </button>
           ))}
         </div>
 
-        <p className="mx-auto mt-12 max-w-2xl text-center text-sm italic text-muted-foreground">
+        <p className="mx-auto mt-12 max-w-2xl text-center text-sm italic text-muted-foreground font-serif">
           All our programmes are delivered with dignity, cultural sensitivity
           and a deep commitment to the Nigerian child.
         </p>
@@ -628,21 +716,63 @@ function useCountUp(target: number, run: boolean, duration = 1400) {
   return value;
 }
 
+function CircularProgress({ value, max, run }: { value: number; max: number; run: boolean }) {
+  const radius = 35;
+  const stroke = 6;
+  const normalizedRadius = radius - stroke * 2;
+  const circumference = normalizedRadius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (Math.min(value, max) / max) * circumference;
+
+  return (
+    <svg height={radius * 2} width={radius * 2} className="inline-block flex-shrink-0">
+      <circle
+        stroke="var(--color-cream)"
+        fill="transparent"
+        strokeWidth={stroke}
+        r={normalizedRadius}
+        cx={radius}
+        cy={radius}
+      />
+      <circle
+        stroke="var(--color-primary)"
+        fill="transparent"
+        strokeWidth={stroke}
+        strokeDasharray={circumference + " " + circumference}
+        style={{ strokeDashoffset: run ? strokeDashoffset : circumference }}
+        className="progress-ring__circle transition-all duration-1000 ease-out"
+        r={normalizedRadius}
+        cx={radius}
+        cy={radius}
+      />
+    </svg>
+  );
+}
+
 function StatCard({ stat, run }: { stat: (typeof STATS)[number]; run: boolean }) {
   const v = useCountUp(stat.value, run);
+  
+  // Custom max values to show nice percentage rings
+  const maxVal = stat.value === 850 ? 1000 : stat.value === 4200 ? 5000 : stat.value === 120 ? 150 : 50;
+
   return (
-    <div className="card-soft text-center">
-      <div className="font-display text-4xl font-extrabold text-primary sm:text-5xl">
-        {v.toLocaleString()}
-        {stat.suffix}
+    <div className="card-soft flex items-center gap-5 p-5 bg-background border border-border/40">
+      <CircularProgress value={v} max={maxVal} run={run} />
+      <div className="text-left">
+        <div className="font-display text-3xl font-extrabold text-navy sm:text-4xl">
+          {v.toLocaleString()}
+          {stat.suffix}
+        </div>
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">{stat.label}</p>
       </div>
-      <p className="mt-2 text-sm font-semibold text-navy">{stat.label}</p>
     </div>
   );
 }
 
-function Impact({ onStory }: { onStory: (i: number) => void }) {
+function Impact({ onStory, onDonate }: { onStory: (i: number) => void; onDonate: () => void }) {
   const [run, setRun] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(3);
+
   useEffect(() => {
     const el = document.getElementById("impact-stats");
     if (!el) return;
@@ -656,68 +786,138 @@ function Impact({ onStory }: { onStory: (i: number) => void }) {
     return () => io.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleCount(1);
+      } else if (window.innerWidth < 1024) {
+        setVisibleCount(2);
+      } else {
+        setVisibleCount(3);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const maxStartIndex = Math.max(0, STORIES.length - visibleCount);
+
+  const nextStory = () => {
+    setStartIndex((prev) => Math.min(prev + 1, maxStartIndex));
+  };
+
+  const prevStory = () => {
+    setStartIndex((prev) => Math.max(prev - 1, 0));
+  };
+
   return (
-    <section id="impact" className="py-24 sm:py-28">
+    <section id="impact" className="py-24 sm:py-28 bg-background">
       <div className="container-prose">
         <SectionHeader
           eyebrow="Our Impact"
           title={
             <>
-              The Children <span className="text-primary">We Serve</span>
+              The Children{" "}
+              <span className="font-serif italic font-normal text-primary lowercase pr-2">
+                we serve
+              </span>
             </>
           }
           sub="Real numbers. Real names. Real hope — across churches, schools and communities in Nigeria."
         />
 
+        {/* Dynamic Circular Stats section */}
         <div id="impact-stats" className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {STATS.map((s) => (
             <StatCard key={s.label} stat={s} run={run} />
           ))}
         </div>
 
-        <div className="mt-20">
-          <h3 className="text-center font-display text-2xl font-bold text-navy sm:text-3xl">
-            Children Whose Paths We Are Lighting
-          </h3>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
-            Every story represents real hope and transformation made possible by
-            partners like you.
-          </p>
+        {/* Dynamic sliding Success Stories carousel */}
+        <div className="mt-24">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
+            <div className="text-left max-w-xl">
+              <h3 className="font-display text-2xl font-bold text-navy sm:text-3xl">
+                Children Whose Paths We Are Lighting
+              </h3>
+              <p className="mt-3 text-muted-foreground">
+                Every story represents real hope and transformation made possible by
+                partners like you.
+              </p>
+            </div>
+            
+            {/* Slider controls */}
+            <div className="flex items-center gap-2 mt-4 md:mt-0">
+              <button
+                onClick={prevStory}
+                disabled={startIndex === 0}
+                className="h-10 w-10 flex items-center justify-center rounded-full border border-border bg-background text-navy transition hover:bg-cream disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label="Previous story"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={nextStory}
+                disabled={startIndex === maxStartIndex}
+                className="h-10 w-10 flex items-center justify-center rounded-full border border-border bg-background text-navy transition hover:bg-cream disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label="Next story"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {STORIES.map((s, i) => (
-              <article key={s.name} className="card-soft !p-0 overflow-hidden">
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={s.img}
-                    alt={`${s.name}, ${s.age}, ${s.location}`}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition duration-700 hover:scale-105"
-                  />
-                  <span className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-bold text-navy">
-                    Age {s.age}
-                  </span>
-                </div>
-                <div className="p-6">
-                  <h4 className="font-display text-lg font-bold text-navy">
-                    {s.name}
-                  </h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-forest">
-                    {s.location}
-                  </p>
-                  <div className="mt-3 flex gap-2 text-sm italic text-foreground/80">
-                    <Quote className="h-4 w-4 flex-shrink-0 text-primary" />
-                    <span>{s.quote}</span>
+          <div className="relative overflow-hidden w-full py-4">
+            <div
+              className="flex gap-6 transition-transform duration-500 ease-in-out"
+              style={{
+                transform: `translateX(-${startIndex * (100 / visibleCount + (24 / window.innerWidth) * 100)}%)`,
+                width: `${(STORIES.length / visibleCount) * 100}%`,
+              }}
+            >
+              {STORIES.map((s, i) => (
+                <article
+                  key={s.name}
+                  className="card-soft !p-0 overflow-hidden flex flex-col justify-between h-full border border-border/40 bg-background"
+                  style={{ width: `calc(${100 / STORIES.length}% - 1.5rem)` }}
+                >
+                  <div>
+                    <div className="relative h-64 overflow-hidden">
+                      <img
+                        src={s.img}
+                        alt={`${s.name}, ${s.age}, ${s.location}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition duration-700 hover:scale-105"
+                      />
+                      <span className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-bold text-navy shadow-soft font-display">
+                        Age {s.age}
+                      </span>
+                    </div>
+                    <div className="p-6">
+                      <h4 className="font-display text-lg font-bold text-navy">
+                        {s.name}
+                      </h4>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-primary mt-1 font-display">
+                        {s.location}
+                      </p>
+                      <div className="mt-4 flex gap-2 text-sm italic text-foreground/80 font-serif">
+                        <Quote className="h-4 w-4 flex-shrink-0 text-primary opacity-60" />
+                        <span>{s.quote}</span>
+                      </div>
+                    </div>
                   </div>
-                  <button
-                    onClick={() => onStory(i)}
-                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
-                  >
-                    Read full story <ArrowRight className="h-4 w-4" />
-                  </button>
-                </div>
-              </article>
-            ))}
+                  <div className="p-6 pt-0">
+                    <button
+                      onClick={() => onStory(i)}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary highlight-hover"
+                    >
+                      Read full story <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -775,13 +975,16 @@ function GetInvolved({
   ];
 
   return (
-    <section id="involved" className="gradient-warm py-24 sm:py-28">
+    <section id="involved" className="bg-cream py-24 sm:py-28 border-t border-border/40">
       <div className="container-prose">
         <SectionHeader
           eyebrow="Get Involved"
           title={
             <>
-              They Care. <span className="text-primary">Do You?</span>
+              They Care.{" "}
+              <span className="font-serif italic font-normal text-primary lowercase pr-2">
+                do you?
+              </span>
             </>
           }
           sub="There are many meaningful ways you can partner with Lightpath Outreach to change a child's future."
@@ -789,157 +992,22 @@ function GetInvolved({
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((c) => (
-            <div key={c.title} className="card-soft flex flex-col">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-forest/10 text-forest">
+            <div key={c.title} className="card-soft flex flex-col bg-background border border-border/40">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary flex-shrink-0">
                 <c.icon className="h-6 w-6" />
               </div>
-              <h3 className="mt-5 text-lg font-bold text-navy">{c.title}</h3>
+              <h3 className="mt-5 text-lg font-bold text-navy font-display">{c.title}</h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
                 {c.desc}
               </p>
               <button
                 onClick={c.action}
-                className="mt-6 inline-flex items-center justify-center gap-1.5 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary"
+                className="btn-hero mt-6 text-xs w-full shadow-soft"
               >
-                {c.cta} <ArrowRight className="h-4 w-4" />
+                {c.cta}
               </button>
             </div>
           ))}
-        </div>
-
-        {/* Tea & Coffee Sunday banner */}
-        <div className="mt-14 overflow-hidden rounded-3xl bg-navy shadow-soft">
-          <div className="grid items-center lg:grid-cols-2">
-            <img
-              src={teaImg}
-              alt="Families and children enjoying a Tea and Coffee Sunday fellowship in a Nigerian church"
-              loading="lazy"
-              className="h-72 w-full object-cover lg:h-full"
-            />
-            <div className="p-8 sm:p-12 text-white">
-              <span className="inline-flex items-center gap-2 rounded-full bg-gold/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-                <Coffee className="h-3.5 w-3.5" /> Tea & Coffee Sunday
-              </span>
-              <h3 className="mt-4 font-display text-2xl font-extrabold sm:text-3xl text-white">
-                Experience the warmth of fellowship.
-              </h3>
-              <p className="mt-4 text-white/85">
-                Our Tea and Coffee Sunday gatherings create safe spaces of love,
-                encouragement and spiritual connection for families and children
-                across Nigeria.
-              </p>
-              <button onClick={onPartner} className="btn-hero mt-6">
-                Host a Tea & Coffee Sunday <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------ Events ----------------------------- */
-
-function Events() {
-  return (
-    <section className="py-24 sm:py-28">
-      <div className="container-prose">
-        <SectionHeader
-          eyebrow="What's Next"
-          title={
-            <>
-              Upcoming <span className="text-primary">Outreaches & Events</span>
-            </>
-          }
-          sub="Mark your calendar and join us in the next season of light."
-        />
-
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {EVENTS.map((e) => (
-            <article
-              key={e.title}
-              className="card-soft flex h-full flex-col bg-cream"
-            >
-              <div className="inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                <Calendar className="h-3.5 w-3.5" /> {e.date}
-              </div>
-              <h3 className="mt-4 text-lg font-bold text-navy">{e.title}</h3>
-              <p className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-forest">
-                <MapPin className="h-3.5 w-3.5" /> {e.location}
-              </p>
-              <p className="mt-3 flex-1 text-sm text-muted-foreground">
-                {e.desc}
-              </p>
-              <button
-                onClick={() => toast.success(`Interest noted for ${e.title} — we'll be in touch.`)}
-                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
-              >
-                Register Interest <ArrowRight className="h-4 w-4" />
-              </button>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------------------- Newsletter ---------------------------- */
-
-function Newsletter() {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [sent, setSent] = useState(false);
-  return (
-    <section className="py-20">
-      <div className="container-prose">
-        <div className="mx-auto max-w-3xl rounded-3xl bg-navy p-10 text-center text-white shadow-soft sm:p-14">
-          <span className="inline-flex items-center gap-2 rounded-full bg-gold/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-            <Sun className="h-3.5 w-3.5" /> Stay in the Light
-          </span>
-          <h2 className="mt-4 font-display text-3xl font-extrabold text-white sm:text-4xl">
-            Join our community
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-white/80">
-            Receive monthly impact stories, prayer points, volunteer
-            opportunities and programme updates.
-          </p>
-
-          {sent ? (
-            <div className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold/20 px-5 py-3 text-gold">
-              <CheckCircle2 className="h-5 w-5" />
-              Thank you — you're in the light with us.
-            </div>
-          ) : (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!email) return;
-                setSent(true);
-                toast.success("You're subscribed — welcome to Lightpath 💛");
-              }}
-              className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row"
-            >
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Your name"
-                className="h-12 flex-1 rounded-full border border-white/15 bg-white/10 px-5 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-gold"
-              />
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                required
-                placeholder="Email address"
-                className="h-12 flex-[1.4] rounded-full border border-white/15 bg-white/10 px-5 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-gold"
-              />
-              <button type="submit" className="btn-hero h-12 !py-0">
-                Subscribe
-              </button>
-            </form>
-          )}
         </div>
       </div>
     </section>
@@ -948,116 +1016,156 @@ function Newsletter() {
 
 /* ------------------------------ Footer ----------------------------- */
 
-function Footer() {
+function Footer({ onDonate }: { onDonate: () => void }) {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [sent, setSent] = useState(false);
+
   return (
-    <footer id="contact" className="bg-navy text-white">
-      <div className="container-prose grid gap-10 py-16 lg:grid-cols-4">
-        <div>
-          <Logo light />
-          <p className="mt-4 text-sm text-white/75">
-            Lighting the path to hope, character &amp; purpose for every
-            Nigerian child.
-          </p>
-          <p className="mt-3 text-xs italic text-white/55">
-            Inspired by faith, serving all children with love.
-          </p>
-        </div>
-
-        <div>
-          <h4 className="font-display text-sm font-bold uppercase tracking-[0.2em] text-gold">
-            Quick Links
-          </h4>
-          <ul className="mt-4 space-y-2 text-sm">
-            {NAV.map((n) => (
-              <li key={n.href}>
-                <a href={n.href} className="text-white/80 hover:text-gold">
-                  {n.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="font-display text-sm font-bold uppercase tracking-[0.2em] text-gold">
-            Contact
-          </h4>
-          <ul className="mt-4 space-y-3 text-sm text-white/80">
-            <li className="flex gap-2">
-              <MapPin className="h-4 w-4 flex-shrink-0 text-gold" />
-              Ile-Ife, Osun State, Nigeria — serving communities nationwide
-            </li>
-            <li className="flex gap-2">
-              <Mail className="h-4 w-4 flex-shrink-0 text-gold" />
-              <a href="mailto:info@lightpathoutreach.org" className="hover:text-gold">
-                info@lightpathoutreach.org
-              </a>
-            </li>
-            <li className="flex gap-2">
-              <Phone className="h-4 w-4 flex-shrink-0 text-gold" />
-              +234 803 XXX XXXX
-            </li>
-          </ul>
-          <div className="mt-5 flex gap-3">
+    <footer id="contact" className="w-full flex flex-col bg-navy text-white">
+      {/* Top Footer Row: Logo & Socials with Light background */}
+      <div className="bg-cream text-navy py-8 border-b border-border/50">
+        <div className="container-prose flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <Logo />
+          <div className="flex items-center gap-3">
             {[
               { Icon: Instagram, label: "Instagram" },
               { Icon: Facebook, label: "Facebook" },
-              { Icon: Twitter, label: "Twitter / X" },
+              { Icon: Twitter, label: "Twitter" },
               { Icon: Youtube, label: "YouTube" },
             ].map(({ Icon, label }) => (
               <a
                 key={label}
                 href="#"
                 aria-label={label}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-gold hover:text-navy"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-background border border-border text-navy transition hover:bg-primary hover:text-white"
               >
-                <Icon className="h-4 w-4" />
+                <Icon className="h-4.5 w-4.5" />
               </a>
             ))}
           </div>
         </div>
+      </div>
 
-        <div>
-          <h4 className="font-display text-sm font-bold uppercase tracking-[0.2em] text-gold">
-            Newsletter
-          </h4>
-          <p className="mt-4 text-sm text-white/75">
-            Monthly stories of hope, straight to your inbox.
-          </p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              toast.success("Subscribed 💛");
-            }}
-            className="mt-4 flex gap-2"
-          >
-            <input
-              type="email"
-              required
-              placeholder="you@example.com"
-              className="h-10 flex-1 rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-gold"
-            />
-            <button className="rounded-full bg-primary px-4 text-sm font-semibold text-white hover:bg-primary/90">
-              Join
-            </button>
-          </form>
+      {/* Main Footer Row: 3 columns */}
+      <div className="py-16 bg-navy/95 border-b border-white/5">
+        <div className="container-prose grid gap-12 md:grid-cols-3">
+          <div>
+            <h4 className="font-display text-sm font-bold uppercase tracking-[0.2em] text-gold border-b border-white/10 pb-3">
+              Our Objectives
+            </h4>
+            <ul className="mt-5 space-y-2.5 text-sm text-white/80">
+              {PROGRAMMES.slice(0, 4).map((p, i) => (
+                <li key={p.title}>
+                  <a href="#programmes" className="hover:text-gold transition inline-flex items-center gap-1.5">
+                    <span className="h-1 w-1 rounded-full bg-primary" />
+                    {p.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-display text-sm font-bold uppercase tracking-[0.2em] text-gold border-b border-white/10 pb-3">
+              Policies
+            </h4>
+            <ul className="mt-5 space-y-2.5 text-sm text-white/80">
+              <li>
+                <a href="#" className="hover:text-gold transition">
+                  Social Media Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gold transition">
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gold transition">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gold transition">
+                  No FEAR Act
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-display text-sm font-bold uppercase tracking-[0.2em] text-gold border-b border-white/10 pb-3">
+              Contact &amp; Support
+            </h4>
+            <ul className="mt-5 space-y-3 text-sm text-white/80">
+              <li className="flex gap-2.5 items-start">
+                <MapPin className="h-4.5 w-4.5 flex-shrink-0 text-gold mt-0.5" />
+                <span>Ile-Ife, Osun State, Nigeria — serving children nationwide</span>
+              </li>
+              <li className="flex gap-2.5 items-center">
+                <Mail className="h-4.5 w-4.5 flex-shrink-0 text-gold" />
+                <a href="mailto:info@lightpathoutreach.org" className="hover:text-gold transition">
+                  info@lightpathoutreach.org
+                </a>
+              </li>
+              <li className="flex gap-2.5 items-center">
+                <Phone className="h-4.5 w-4.5 flex-shrink-0 text-gold" />
+                <span>+234 803 XXX XXXX</span>
+              </li>
+            </ul>
+
+            {/* Newsletter incorporated into Footer */}
+            <div className="mt-6">
+              <h5 className="text-xs font-bold uppercase tracking-[0.15em] text-gold">Subscribe to news</h5>
+              {sent ? (
+                <p className="mt-2 text-xs text-gold flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4" /> Subscribed successfully!
+                </p>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (!email) return;
+                    setSent(true);
+                    toast.success("Welcome aboard 💛");
+                  }}
+                  className="mt-2.5 flex flex-col gap-2"
+                >
+                  <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    required
+                    placeholder="Your email address"
+                    className="h-10 text-xs rounded-full border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-gold"
+                  />
+                  <button type="submit" className="btn-hero h-9 !py-0 text-xs font-bold shadow-soft">
+                    Subscribe
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <div className="container-prose flex flex-col gap-2 py-5 text-center text-xs text-white/60 sm:flex-row sm:justify-between sm:text-left">
-          <p>
-            © 2026 Lightpath Outreach. All rights reserved. ·{" "}
-            <a href="#" className="hover:text-gold">Privacy</a>
-          </p>
-          <p>Designed with hope for every Nigerian child.</p>
+      {/* Bottom Panel Copyright */}
+      <div className="py-6 bg-navy text-center text-xs text-white/50 border-t border-white/5">
+        <div className="container-prose flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <p>Lightpath Outreach © 2026. All rights reserved.</p>
+          <div className="flex gap-4">
+            <a href="#" className="hover:text-white transition">Terms</a>
+            <a href="#" className="hover:text-white transition">Privacy</a>
+            <a href="#" className="hover:text-white transition">Security</a>
+          </div>
         </div>
       </div>
     </footer>
   );
 }
 
-/* ============================== Dialogs ============================== */
+/* ------------------------------- Dialogs ---------------------------- */
 
 function DonateDialog({
   open,
@@ -1074,16 +1182,10 @@ function DonateDialog({
   const [msg, setMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const reset = () => {
-    setAmount(10000); setCustom(""); setName(""); setEmail(""); setPhone(""); setMsg(""); setSuccess(false);
-  };
-
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const value = amount === "custom" ? Number(custom) : amount;
-    if (!value || !name || !email) return;
     setSuccess(true);
-    toast.success(`Thank you, ${name.split(" ")[0]} — your ₦${value.toLocaleString()} gift lights a path.`);
+    toast.success("Thank you for lighting a path 💛");
   };
 
   return (
@@ -1091,7 +1193,7 @@ function DonateDialog({
       open={open}
       onOpenChange={(o) => {
         onOpenChange(o);
-        if (!o) setTimeout(reset, 200);
+        if (!o) setTimeout(() => { setSuccess(false); setAmount(10000); setCustom(""); setName(""); setEmail(""); setPhone(""); setMsg(""); }, 200);
       }}
     >
       <DialogContent className="max-w-lg">
@@ -1377,14 +1479,14 @@ function StoryDialog({
             <img src={story.img} alt={story.name} className="h-64 w-full object-cover" />
             <div className="p-6 sm:p-8">
               <DialogHeader>
-                <DialogTitle className="font-display text-2xl">
+                <DialogTitle className="font-display text-2xl font-bold">
                   {story.name}, {story.age}
                 </DialogTitle>
-                <DialogDescription className="font-semibold text-forest">
+                <DialogDescription className="font-semibold text-primary font-display">
                   {story.location}
                 </DialogDescription>
               </DialogHeader>
-              <blockquote className="mt-4 border-l-4 border-primary pl-4 text-lg italic text-foreground/80">
+              <blockquote className="mt-4 border-l-4 border-primary pl-4 text-lg italic text-foreground/80 font-serif">
                 “{story.quote}”
               </blockquote>
               <p className="mt-4 leading-relaxed text-muted-foreground">{story.story}</p>
@@ -1413,10 +1515,10 @@ function ProgrammeDialog({
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                 <p.icon className="h-6 w-6" />
               </div>
-              <DialogTitle className="mt-3 font-display text-2xl">{p.title}</DialogTitle>
+              <DialogTitle className="mt-3 font-display text-2xl font-bold">{p.title}</DialogTitle>
             </DialogHeader>
-            <p className="text-muted-foreground leading-relaxed">{p.long}</p>
-            <DialogFooter>
+            <p className="text-muted-foreground leading-relaxed mt-2">{p.long}</p>
+            <DialogFooter className="mt-4">
               <a href="#involved" onClick={() => onOpenChange(false)} className="btn-hero w-full">
                 Get Involved <ArrowRight className="h-4 w-4" />
               </a>

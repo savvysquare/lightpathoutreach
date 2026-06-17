@@ -13,7 +13,8 @@
 
 @theme inline {
   --font-sans: "Nunito", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Nunito", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Merriweather", Georgia, serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -106,12 +107,13 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     color: var(--color-navy);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.01em;
   }
 }
 
 @layer utilities {
+  .font-serif { font-family: var(--font-serif); }
   .bg-cream { background-color: var(--color-cream); }
   .text-navy { color: var(--color-navy); }
   .text-forest { color: var(--color-forest); }
@@ -124,41 +126,79 @@
 
   .container-prose { max-width: 1200px; margin-inline: auto; padding-inline: 1.25rem; }
 
-  /* Yellow primary CTA — matches ChildHope "Adopt Now" pill */
+  /* Pill Buttons matching ChildHope */
   .btn-hero {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
     background: var(--color-gold); color: var(--color-navy);
-    font-weight: 700; padding: 0.95rem 2rem; border-radius: 0.5rem;
-    box-shadow: 0 6px 18px -10px oklch(0.85 0.15 95 / 0.7);
-    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+    font-weight: 600; padding: 0.75rem 1.75rem; border-radius: 9999px;
+    box-shadow: 0 4px 12px oklch(0.88 0.15 95 / 0.3);
+    transition: all .25s ease;
   }
-  .btn-hero:hover { transform: translateY(-2px); background: oklch(0.92 0.15 95); }
+  .btn-hero:hover { transform: translateY(-2px); background: oklch(0.92 0.15 95); box-shadow: 0 6px 16px oklch(0.88 0.15 95 / 0.45); }
 
-  /* White outline pill — matches ChildHope "Learn More" */
   .btn-outline-light {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    background: oklch(1 0 0); color: var(--color-primary); font-weight: 700;
-    padding: 0.95rem 2rem; border-radius: 0.5rem;
+    background: oklch(1 0 0); color: var(--color-primary); font-weight: 600;
+    padding: 0.75rem 1.75rem; border-radius: 9999px;
     border: 1px solid var(--color-border);
-    transition: background-color .2s ease, color .2s ease, transform .2s ease;
+    transition: all .25s ease;
   }
   .btn-outline-light:hover { background: var(--color-primary); color: var(--color-primary-foreground); transform: translateY(-2px); }
 
-  /* Teal secondary action */
   .btn-forest {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
     background: var(--color-primary); color: var(--color-primary-foreground);
-    font-weight: 700; padding: 0.85rem 1.6rem; border-radius: 0.5rem;
-    transition: transform .2s ease, background-color .2s ease;
+    font-weight: 600; padding: 0.75rem 1.75rem; border-radius: 9999px;
+    transition: all .25s ease;
   }
   .btn-forest:hover { transform: translateY(-2px); background: oklch(0.50 0.09 230); }
 
+  /* Premium Card Styles */
   .card-soft {
-    background: var(--color-card); border-radius: 0.75rem; padding: 2rem;
+    background: var(--color-card); border-radius: 24px; padding: 2rem;
     box-shadow: var(--shadow-soft); border: 1px solid var(--color-border);
-    transition: transform .25s ease, box-shadow .25s ease;
+    transition: all .3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .card-soft:hover { transform: translateY(-3px); box-shadow: 0 16px 32px -16px oklch(0.50 0.05 230 / 0.22); }
+  .card-soft:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -20px oklch(0.50 0.05 230 / 0.15); }
+
+  /* Highlight underlines / hovers inspired by ChildHope */
+  .highlight-hover {
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease;
+  }
+  .highlight-hover::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--color-primary);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  .highlight-hover:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  /* Slider Transitions */
+  .slide-fade-in {
+    animation: slideFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes slideFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Circular Progress Ring */
+  .progress-ring__circle {
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+  }
 
   .fade-up { animation: fadeUp .7s ease both; }
   @keyframes fadeUp {
