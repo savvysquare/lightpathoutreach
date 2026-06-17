@@ -427,7 +427,7 @@ function Hero({ onDonate }: { onDonate: () => void }) {
   const prevSlide = () => setActive((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
 
   return (
-    <section className="relative isolate flex min-h-[85svh] items-center overflow-hidden bg-navy">
+    <section className="relative isolate flex min-h-[92svh] items-center overflow-hidden bg-navy">
       {/* Background Images with transition */}
       {SLIDES.map((slide, i) => (
         <div
@@ -439,23 +439,31 @@ function Hero({ onDonate }: { onDonate: () => void }) {
           <img
             src={slide.image}
             alt={slide.badge}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover object-center"
           />
-          {/* ChildHope signature overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/55 to-transparent" />
-          <div className="absolute inset-0 bg-navy/15" />
+          {/* EON-inspired: dense left dark panel + bottom vignette for guaranteed legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/88 via-black/65 to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
         </div>
       ))}
 
+      {/* Top eyebrow stripe — Save the Children inspired accent */}
+      <div className="hero-eyebrow-stripe" />
+
       {/* Main Content Area */}
-      <div className="container-prose w-full py-16 text-white relative z-10">
-        <div className="max-w-2xl text-left slide-fade-in" key={active}>
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] backdrop-blur-sm">
+      <div className="container-prose w-full py-20 text-white relative z-10">
+        <div className="max-w-[680px] text-left slide-fade-in" key={active}>
+          {/* Badge pill */}
+          <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.22em] backdrop-blur-sm text-gold">
             <span className="h-1.5 w-1.5 rounded-full bg-gold" />
             {SLIDES[active].badge}
           </span>
           
-          <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          {/* Headline — heavy weight, wide text-shadow for contrast on any photo */}
+          <h1
+            className="mt-6 font-display text-[2.8rem] font-extrabold leading-[1.06] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+            style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.4)" }}
+          >
             {SLIDES[active].titleStart}
             <br />
             <span className="text-gold font-serif italic font-normal tracking-wide lowercase pr-3">
@@ -465,17 +473,40 @@ function Hero({ onDonate }: { onDonate: () => void }) {
             {SLIDES[active].titleEnd}
           </h1>
 
-          <p className="mt-5 max-w-xl text-base text-white/85 leading-relaxed font-serif">
+          {/* Separator line */}
+          <div className="mt-6 h-[3px] w-16 rounded-full bg-gold" />
+
+          <p
+            className="mt-5 max-w-xl text-[1.05rem] text-white/95 leading-relaxed"
+            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}
+          >
             {SLIDES[active].desc}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <button onClick={onDonate} className="btn-hero text-sm font-bold shadow-glow">
-              <Heart className="h-4 w-4" /> Join Our Mission
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <button onClick={onDonate} className="btn-hero text-sm font-bold shadow-glow group">
+              <Heart className="h-4 w-4 group-hover:scale-110 transition-transform" /> Join Our Mission
             </button>
-            <a href="#about" className="btn-outline-light text-sm font-bold text-navy hover:text-white bg-white hover:bg-primary border-none">
+            <a
+              href="#about"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-white/70 px-6 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-navy hover:border-white"
+            >
               Learn More <ArrowRight className="h-4 w-4" />
             </a>
+          </div>
+
+          {/* Mini trust indicators */}
+          <div className="mt-10 flex items-center gap-5 flex-wrap">
+            {[
+              { val: "850+", label: "Children helped" },
+              { val: "4,200+", label: "Meals served" },
+              { val: "35+", label: "Church partners" },
+            ].map((s) => (
+              <div key={s.label} className="flex items-baseline gap-1.5">
+                <span className="font-display text-2xl font-extrabold text-gold" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.4)" }}>{s.val}</span>
+                <span className="text-xs text-white/75 font-semibold tracking-wide uppercase">{s.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -483,27 +514,27 @@ function Hero({ onDonate }: { onDonate: () => void }) {
       {/* Slide Navigation controls */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/10 text-white/70 backdrop-blur-sm transition hover:bg-white hover:text-navy hover:border-white hover:scale-105 z-20"
+        className="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 text-white backdrop-blur-sm transition hover:bg-white hover:text-navy hover:border-white hover:scale-110 z-20"
         aria-label="Previous slide"
       >
         <ArrowRight className="h-5 w-5 rotate-180" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/10 text-white/70 backdrop-blur-sm transition hover:bg-white hover:text-navy hover:border-white hover:scale-105 z-20"
+        className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 text-white backdrop-blur-sm transition hover:bg-white hover:text-navy hover:border-white hover:scale-110 z-20"
         aria-label="Next slide"
       >
         <ArrowRight className="h-5 w-5" />
       </button>
 
       {/* Slide Bullets */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2.5 z-20">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
         {SLIDES.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setActive(idx)}
-            className={`h-2.5 rounded-full transition-all duration-300 ${
-              idx === active ? "w-8 bg-gold" : "w-2.5 bg-white/40 hover:bg-white/80"
+            className={`rounded-full transition-all duration-400 ${
+              idx === active ? "w-10 h-2.5 bg-gold" : "w-2.5 h-2.5 bg-white/40 hover:bg-white/80"
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />
@@ -517,21 +548,41 @@ function Hero({ onDonate }: { onDonate: () => void }) {
 
 function IntroBanner() {
   return (
-    <section className="bg-cream py-12 border-b border-border/50">
-      <div className="container-prose flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-navy leading-tight font-display">
-            Every child deserves{" "}
-            <span className="font-serif italic font-normal text-primary lowercase pr-2">
-              hope, character
-            </span>{" "}
-            and a bright future.
-          </h2>
+    <section className="bg-background py-14 border-b border-border/50">
+      <div className="container-prose">
+        {/* Floating stat bar — overlapping feel inspired by Save the Children */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 -mt-20 mb-14 relative z-10">
+          {STATS.map((s) => (
+            <div
+              key={s.label}
+              className="rounded-2xl bg-white shadow-soft border border-border/30 px-5 py-5 flex flex-col items-center text-center"
+            >
+              <span className="font-display text-3xl font-extrabold text-primary">
+                {s.value.toLocaleString()}{s.suffix}
+              </span>
+              <span className="mt-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground leading-snug">
+                {s.label}
+              </span>
+            </div>
+          ))}
         </div>
-        <div className="flex-shrink-0">
-          <a href="#about" className="btn-forest text-sm font-bold shadow-soft">
-            Discover Our Values
-          </a>
+
+        {/* Intro headline row */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-navy leading-tight font-display">
+              Every child deserves{" "}
+              <span className="font-serif italic font-normal text-primary lowercase pr-2">
+                hope, character
+              </span>{" "}
+              and a bright future.
+            </h2>
+          </div>
+          <div className="flex-shrink-0">
+            <a href="#about" className="btn-forest text-sm font-bold shadow-soft">
+              Discover Our Values
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -726,7 +777,7 @@ function CircularProgress({ value, max, run }: { value: number; max: number; run
   return (
     <svg height={radius * 2} width={radius * 2} className="inline-block flex-shrink-0">
       <circle
-        stroke="var(--color-cream)"
+        stroke="rgba(255,255,255,0.2)"
         fill="transparent"
         strokeWidth={stroke}
         r={normalizedRadius}
@@ -734,7 +785,7 @@ function CircularProgress({ value, max, run }: { value: number; max: number; run
         cy={radius}
       />
       <circle
-        stroke="var(--color-primary)"
+        stroke="var(--color-gold)"
         fill="transparent"
         strokeWidth={stroke}
         strokeDasharray={circumference + " " + circumference}
@@ -755,14 +806,14 @@ function StatCard({ stat, run }: { stat: (typeof STATS)[number]; run: boolean })
   const maxVal = stat.value === 850 ? 1000 : stat.value === 4200 ? 5000 : stat.value === 120 ? 150 : 50;
 
   return (
-    <div className="card-soft flex items-center gap-5 p-5 bg-background border border-border/40">
+    <div className="rounded-2xl border border-white/10 bg-white/8 backdrop-blur-sm px-5 py-6 flex items-center gap-5 hover:bg-white/12 transition">
       <CircularProgress value={v} max={maxVal} run={run} />
       <div className="text-left">
-        <div className="font-display text-3xl font-extrabold text-navy sm:text-4xl">
+        <div className="font-display text-3xl font-extrabold text-white sm:text-4xl">
           {v.toLocaleString()}
           {stat.suffix}
         </div>
-        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">{stat.label}</p>
+        <p className="text-xs font-semibold text-white/60 uppercase tracking-wider mt-0.5">{stat.label}</p>
       </div>
     </div>
   );
@@ -812,33 +863,45 @@ function Impact({ onStory, onDonate }: { onStory: (i: number) => void; onDonate:
   };
 
   return (
-    <section id="impact" className="py-24 sm:py-28 bg-background">
-      <div className="container-prose">
-        <SectionHeader
-          eyebrow="Our Impact"
-          title={
-            <>
+    <section id="impact" className="bg-background">
+      {/* EON-inspired: Full-bleed dark navy impact numbers band */}
+      <div
+        id="impact-stats"
+        className="w-full bg-navy py-20"
+      >
+        <div className="container-prose">
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.22em] text-gold">
+              Our Impact
+            </span>
+            <h2 className="mt-4 font-display text-3xl font-extrabold text-white sm:text-4xl md:text-5xl">
               The Children{" "}
-              <span className="font-serif italic font-normal text-primary lowercase pr-2">
+              <span className="font-serif italic font-normal text-gold lowercase pr-2">
                 we serve
               </span>
-            </>
-          }
-          sub="Real numbers. Real names. Real hope — across churches, schools and communities in Nigeria."
-        />
+            </h2>
+            <p className="mt-4 text-base text-white/70 max-w-xl mx-auto">
+              Real numbers. Real names. Real hope — across churches, schools and communities in Nigeria.
+            </p>
+          </div>
 
-        {/* Dynamic Circular Stats section */}
-        <div id="impact-stats" className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {STATS.map((s) => (
-            <StatCard key={s.label} stat={s} run={run} />
-          ))}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {STATS.map((s) => (
+              <StatCard key={s.label} stat={s} run={run} />
+            ))}
+          </div>
         </div>
+      </div>
 
-        {/* Dynamic sliding Success Stories carousel */}
-        <div className="mt-24">
+      {/* Success Stories carousel */}
+      <div className="py-24 sm:py-28">
+        <div className="container-prose">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
             <div className="text-left max-w-xl">
-              <h3 className="font-display text-2xl font-bold text-navy sm:text-3xl">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                Stories of Hope
+              </span>
+              <h3 className="mt-4 font-display text-2xl font-bold text-navy sm:text-3xl">
                 Children Whose Paths We Are Lighting
               </h3>
               <p className="mt-3 text-muted-foreground">
@@ -852,7 +915,7 @@ function Impact({ onStory, onDonate }: { onStory: (i: number) => void; onDonate:
               <button
                 onClick={prevStory}
                 disabled={startIndex === 0}
-                className="h-10 w-10 flex items-center justify-center rounded-full border border-border bg-background text-navy transition hover:bg-cream disabled:opacity-40 disabled:cursor-not-allowed"
+                className="h-11 w-11 flex items-center justify-center rounded-full border-2 border-border bg-background text-navy transition hover:bg-cream hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed"
                 aria-label="Previous story"
               >
                 <ChevronLeft className="h-5 w-5" />
@@ -860,7 +923,7 @@ function Impact({ onStory, onDonate }: { onStory: (i: number) => void; onDonate:
               <button
                 onClick={nextStory}
                 disabled={startIndex === maxStartIndex}
-                className="h-10 w-10 flex items-center justify-center rounded-full border border-border bg-background text-navy transition hover:bg-cream disabled:opacity-40 disabled:cursor-not-allowed"
+                className="h-11 w-11 flex items-center justify-center rounded-full border-2 border-border bg-background text-navy transition hover:bg-cream hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed"
                 aria-label="Next story"
               >
                 <ChevronRight className="h-5 w-5" />
@@ -890,9 +953,12 @@ function Impact({ onStory, onDonate }: { onStory: (i: number) => void; onDonate:
                         loading="lazy"
                         className="h-full w-full object-cover transition duration-700 hover:scale-105"
                       />
+                      {/* Age badge */}
                       <span className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-bold text-navy shadow-soft font-display">
                         Age {s.age}
                       </span>
+                      {/* Bottom image gradient for text overlap */}
+                      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
                     </div>
                     <div className="p-6">
                       <h4 className="font-display text-lg font-bold text-navy">
@@ -918,6 +984,24 @@ function Impact({ onStory, onDonate }: { onStory: (i: number) => void; onDonate:
                 </article>
               ))}
             </div>
+          </div>
+
+          {/* Donate CTA strip — Save the Children inspired */}
+          <div className="mt-16 rounded-3xl bg-primary px-8 py-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div>
+              <h3 className="font-display text-2xl font-extrabold text-white">
+                Help us reach every child
+              </h3>
+              <p className="mt-1 text-sm text-white/80">
+                Your support makes mentorship, meals, and safe spaces possible.
+              </p>
+            </div>
+            <button
+              onClick={onDonate}
+              className="flex-shrink-0 inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-navy shadow-glow transition hover:scale-105 hover:shadow-xl"
+            >
+              <Heart className="h-4 w-4" /> Donate Today
+            </button>
           </div>
         </div>
       </div>

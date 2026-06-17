@@ -200,6 +200,22 @@
     transform-origin: 50% 50%;
   }
 
+  /* EON/Save-the-Children hero eyebrow accent stripe */
+  .hero-eyebrow-stripe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-gold) 0%, var(--color-primary) 60%, transparent 100%);
+    z-index: 30;
+  }
+
+  /* Dark-section glassmorphism overrides */
+  .bg-white\/8 { background-color: rgba(255,255,255,0.08); }
+  .bg-white\/12 { background-color: rgba(255,255,255,0.12); }
+  .hover\:bg-white\/12:hover { background-color: rgba(255,255,255,0.12); }
+
   .fade-up { animation: fadeUp .7s ease both; }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
