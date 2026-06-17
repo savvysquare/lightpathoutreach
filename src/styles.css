@@ -288,8 +288,12 @@
     transform: translateY(-4px);
     box-shadow: var(--shadow-xl);
   }
-  .stat-tile:hover .stat-num  { color: #c9fba2; }
-  .stat-tile:hover .stat-lbl  { color: rgba(255,255,255,0.65); }
+  /* Default colors driven by CSS so hover can override */
+  .stat-tile .stat-num { color: #01284f; transition: color 0.3s ease; }
+  .stat-tile .stat-lbl { color: #5c5c5c; transition: color 0.3s ease; }
+  /* Hover: lime on navy = 8.9:1 ✓ WCAG AAA; rgba(255,255,255,0.75) on navy ≈ 5.8:1 ✓ AA */
+  .stat-tile:hover .stat-num { color: #c9fba2 !important; }
+  .stat-tile:hover .stat-lbl { color: rgba(255,255,255,0.75) !important; }
 
   /* ── Animated underline ── */
   .link-anim {

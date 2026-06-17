@@ -57,11 +57,11 @@ const STATS = [
 ];
 
 const STORIES = [
-  { img: imgBlessing,  name: "Blessing Adebayo",   age: 11, location: "Ile-Ife, Osun State", quote: "I used to be quiet. Now I lead my Sunday school class.",          story: "Blessing joined our girls' mentorship circle two years ago. Today she leads songs, mentors younger girls, and dreams of becoming a teacher." },
-  { img: imgChinedu,   name: "Chinedu Okeke",      age: 14, location: "Ibadan, Oyo State",   quote: "Lightpath helped me see further than today.",                      story: "After education support and purpose workshops, Chinedu placed second in his school maths competition and is preparing for senior secondary scholarships." },
-  { img: imgAmina,     name: "Amina Suleiman",     age: 9,  location: "Osogbo, Osun State",  quote: "I feel proud of myself now.",                                      story: "Our hygiene and self-worth programme gave Amina the tools — and the confidence — to thrive. Her teachers say she is unrecognisable from the shy girl she was a year ago." },
-  { img: imgOluwaseun, name: "Oluwaseun Bamidele", age: 13, location: "Lagos",                quote: "Tea & Coffee Sunday feels like home.",                             story: "Through community fellowship and emotional support, Oluwaseun found a safe place to talk, pray and grow after a difficult season in his family." },
-  { img: imgFatima,    name: "Fatima Yusuf",       age: 16, location: "Abuja",               quote: "Now I mentor others, just like I was mentored.",                   story: "Fatima moved from mentee to peer mentor in two years. She now leads a circle of eight younger girls in her community." },
+  { img: imgBlessing,  name: "Blessing Adebayo",   age: 11, location: "Nigeria", quote: "I used to be quiet. Now I lead my Sunday school class.",          story: "Blessing joined our girls' mentorship circle two years ago. Today she leads songs, mentors younger girls, and dreams of becoming a teacher." },
+  { img: imgChinedu,   name: "Chinedu Okeke",      age: 14, location: "Nigeria",   quote: "Lightpath helped me see further than today.",                      story: "After education support and purpose workshops, Chinedu placed second in his school maths competition and is preparing for senior secondary scholarships." },
+  { img: imgAmina,     name: "Amina Suleiman",     age: 9,  location: "Nigeria",  quote: "I feel proud of myself now.",                                      story: "Our hygiene and self-worth programme gave Amina the tools — and the confidence — to thrive. Her teachers say she is unrecognisable from the shy girl she was a year ago." },
+  { img: imgOluwaseun, name: "Oluwaseun Bamidele", age: 13, location: "Nigeria",                quote: "Tea & Coffee Sunday feels like home.",                             story: "Through community fellowship and emotional support, Oluwaseun found a safe place to talk, pray and grow after a difficult season in his family." },
+  { img: imgFatima,    name: "Fatima Yusuf",       age: 16, location: "Nigeria",               quote: "Now I mentor others, just like I was mentored.",                   story: "Fatima moved from mentee to peer mentor in two years. She now leads a circle of eight younger girls in her community." },
 ];
 
 const SLIDES = [
@@ -85,7 +85,7 @@ function LightpathHome() {
   return (
     <div id="home" className="min-h-screen bg-background text-foreground">
       <Navbar open={menuOpen} setOpen={setMenuOpen} onDonate={() => setDonateOpen(true)} />
-      <Hero         onDonate={() => setDonateOpen(true)} />
+      <Hero         onDonate={() => setDonateOpen(true)} onVolunteer={() => setVolunteerOpen(true)} />
       <TrustBand />
       <About />
       <Programmes   onOpen={(i) => setProgramOpen(i)} />
@@ -117,11 +117,11 @@ function Logo({ light = false }: { light?: boolean }) {
       >
         <Sun className="h-[18px] w-[18px]" style={{ color: light ? "#c9fba2" : "#c9fba2" }} />
       </span>
-      <span className="flex flex-col leading-none">
-        <span className="font-sans text-[15px] font-bold tracking-tight" style={{ color: light ? "#fff" : "#01284f" }}>
+      <span className="flex flex-col" style={{ gap: "3px" }}>
+        <span className="font-sans text-[15px] font-bold tracking-tight leading-none" style={{ color: light ? "#fff" : "#01284f" }}>
           Lightpath
         </span>
-        <span className="text-[10px] font-semibold uppercase tracking-[0.15em]" style={{ color: light ? "rgba(255,255,255,0.55)" : "#d94832" }}>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.15em] leading-none" style={{ color: light ? "rgba(255,255,255,0.55)" : "#d94832" }}>
           Outreach
         </span>
       </span>
@@ -214,7 +214,7 @@ function Navbar({ open, setOpen, onDonate }: { open: boolean; setOpen: (v: boole
 }
 
 /* ─── Hero ──────────────────────────────────────────────────── */
-function Hero({ onDonate }: { onDonate: () => void }) {
+function Hero({ onDonate, onVolunteer }: { onDonate: () => void; onVolunteer: () => void }) {
   const [active, setActive] = useState(0);
   useEffect(() => {
     const t = setInterval(() => setActive((p) => (p + 1) % SLIDES.length), 7000);
@@ -252,7 +252,7 @@ function Hero({ onDonate }: { onDonate: () => void }) {
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
-            <button onClick={onDonate} className="btn-cta">
+            <button onClick={onVolunteer} className="btn-cta">
               <Heart className="h-4 w-4" /> Join Our Mission
             </button>
             <a href="#about" className="btn-ghost-white">
@@ -297,7 +297,7 @@ function TrustBand() {
     { num: "850+", label: "Children Mentored" },
     { num: "4,200+", label: "Meals Served" },
     { num: "120+", label: "Programmes" },
-    { num: "2019", label: "Est. Ile-Ife, Nigeria" },
+    { num: "2019", label: "Est. Nigeria" },
   ];
   return (
     <section className="divider bg-surface border-b" style={{ borderColor: "rgba(36,36,36,0.08)" }}>
@@ -341,7 +341,7 @@ function About() {
           <div className="absolute bottom-5 left-5 rounded-lg px-4 py-3 shadow-lg"
             style={{ background: "#01284f" }}>
             <p className="label-mono mb-0.5" style={{ color: "#c9fba2" }}>Faith-rooted</p>
-            <p className="font-display text-base font-bold text-white">Est. 2019 · Ile-Ife, Nigeria</p>
+            <p className="font-display text-base font-bold text-white">Est. 2019 · Nigeria</p>
           </div>
           <div className="absolute -top-6 -right-6 -z-10 h-40 w-40 rounded-full opacity-30"
             style={{ background: "#cfdedc", filter: "blur(40px)" }} />
@@ -473,8 +473,7 @@ function StatTile({ stat, run }: { stat: (typeof STATS)[number]; run: boolean })
   return (
     <div className="stat-tile">
       {/* #01284f on #f8f7f4: 10.3:1 ✓; lime on navy hover: 8.9:1 ✓ */}
-      <div className="font-display text-4xl font-bold stat-num transition-colors duration-300"
-        style={{ color: "#01284f" }}>
+      <div className="font-display text-4xl font-bold stat-num transition-colors duration-300">
         {v.toLocaleString()}{stat.suffix}
       </div>
       <p className="label-mono mt-2 stat-lbl transition-colors duration-300">{stat.label}</p>
@@ -608,7 +607,7 @@ function GetInvolved({ onDonate, onVolunteer, onPartner }: {
     { icon: Heart,     tag: "Most Impactful", title: "Donate",           desc: "Your gift provides meals, school supplies, mentorship sessions, hygiene kits and safe spaces. Every naira lights a path.",                                                              cta: "Donate Now",       action: onDonate,   featured: true  },
     { icon: HandHeart, tag: null,             title: "Volunteer",         desc: "Become a mentor, help at outreaches, support events or share your skills — teaching, counselling, logistics, media.",                                                                    cta: "Sign Up",          action: onVolunteer,featured: false },
     { icon: Handshake, tag: null,             title: "Partner With Us",   desc: "Churches, schools, businesses & community groups: host Tea & Coffee Sunday, co-run programmes, provide venues or resources.",                                                            cta: "Become a Partner", action: onPartner,  featured: false },
-    { icon: Globe,     tag: null,             title: "Spread the Word",   desc: "Share our mission, host a fundraiser, mobilise your network, or follow and amplify our stories on social media.",                                                                        cta: "Share Lightpath",  action: () => { navigator.clipboard?.writeText("https://lightpathoutreach.org"); toast.success("Link copied 💛"); }, featured: false },
+    { icon: Globe,     tag: null,             title: "Spread the Word",   desc: "Share our mission, host a fundraiser, mobilise your network, or follow and amplify our stories on social media.",                                                                        cta: "Share Lightpath",  action: () => { navigator.clipboard?.writeText("https://lightpathoutreach.com"); toast.success("Link copied 💛"); }, featured: false },
   ];
 
   return (
@@ -740,12 +739,12 @@ function Footer({ onDonate }: { onDonate: () => void }) {
             <ul className="space-y-3 text-sm mb-8" style={{ color: "rgba(255,255,255,0.60)" }}>
               <li className="flex gap-2.5 items-start">
                 <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#d94832" }} />
-                <span>Ile-Ife, Osun State, Nigeria</span>
+                <span>Nigeria</span>
               </li>
               <li className="flex gap-2.5 items-center">
                 <Mail className="h-4 w-4 flex-shrink-0" style={{ color: "#d94832" }} />
-                <a href="mailto:info@lightpathoutreach.org" className="hover:text-white transition">
-                  info@lightpathoutreach.org
+                <a href="mailto:info@lightpathoutreach.com" className="hover:text-white transition">
+                  info@lightpathoutreach.com
                 </a>
               </li>
               <li className="flex gap-2.5 items-center">
